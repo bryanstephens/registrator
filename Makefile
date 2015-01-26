@@ -3,6 +3,7 @@ HARDWARE=$(shell uname -m)
 VERSION=0.4.0
 
 build:
+	GOOS=linux godep go build
 	docker build -t registrator .
 
 release:

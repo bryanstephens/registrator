@@ -53,6 +53,7 @@ func NewServiceRegistry(uri *url.URL) ServiceRegistry {
 	factory := map[string]func(*url.URL) ServiceRegistry{
 		"consul":  NewConsulRegistry,
 		"etcd":    NewEtcdRegistry,
+		"eureka":  NewEurekaRegistry,
 		"skydns2": NewSkydns2Registry,
 	}[uri.Scheme]
 	if factory == nil {
@@ -92,7 +93,7 @@ func main() {
 	events := make(chan *dockerapi.APIEvents)
 	assert(docker.AddEventListener(events))
 	log.Println("registrator: Listening for Docker events...")
-	
+
 	// List already running containers
 	containers, err := docker.ListContainers(dockerapi.ListContainersOptions{})
 	assert(err)
